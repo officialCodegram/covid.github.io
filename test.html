@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background: #131313;
+            padding: 2px;
+            position: relative;
+            
+        }
+        li{
+            list-style: none;
+        }
+        a{
+            color: #fff;
+            text-decoration: none;
+        }
+        a:hover{
+            color: #ffffff57;
+        }
+        textarea{
+            background: rgb(0, 0, 0);
+            padding: 4px;
+            border: none;
+            outline: none;
+            height: 48vh;
+            width: 100%;
+            color: rgb(0, 204, 187);
+            text-align: start;
+            resize: none;
+        }
+        iframe{
+            width: 100%;
+            height:40vh;
+            border:1px solid #ffffff31;
+            background: #010101;
+        }
+        button{
+            background: #131313;
+            color: #fff;
+            border: none;
+            outline: none;
+            padding: 2px 4px;
+        }
+        /* html btn is first child */
+        button:hover,button#html_btn{
+            background:#25a186;
+        }
+        
+        .side_bar{
+            position: absolute;
+            z-index: 9999999;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            background: #ffffff17;
+            display: none;
+            
+        }
+        .side_bar nav{
+            height: 100vh;
+            width:40%;
+            background: #000;
+            float: right;
+            color: #fff;
+            padding:20px;
+        }
+        .side_bar nav .close{
+            height: 40px;
+        }
+        .side_bar nav .close i{
+            float: right;
+            background: #69696942;
+            padding: 5px;
+        }
+        header{
+            background: #000;
+            color: #fff;
+            padding:10px 20px;
+           
+        }
+        header .left{
+            display: inline-block;
+        }
+        header .left .logo{
+            display: inline-block;
+        }
+        header .right{
+           display: inline-block;
+           float: right;
+        }
+
+        .code_editor{
+            margin-top:3px;
+        }
+
+        .code_editor .text_area  #css,.code_editor .text_area #js{
+            display: none;
+        }
+        .code_editor .output_box #viewer{
+            display: none;
+        }
+        header #desktop{
+            display: none;
+        }
+        header #desktop .layout_key{
+            background: #131313;
+            color: rgba(255, 255, 255, 0.438);
+        }
+        footer{
+            background: rgba(0, 0, 0, 0);
+            position:sticky;
+            bottom: 0;
+            padding-left:20px;
+            margin-top: 2px;
+        }
+        footer i{
+            margin-right:4px;
+        }
+        footer .btn_footer{
+            background: #fffcfc5d;
+        }
+        #alert_box{
+            display: none;
+        }
+        #alert_box #alert_main{
+            background: #e6e6e631;
+            width:100vw;
+            height:100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius:.3em;
+            text-align: center;
+            z-index:99999999;
+            backdrop-filter: blur(3px);
+            display: flex;
+            justify-content: center;
+            align-items: center;       
+        }
+        #alert_box .alert_div{
+            background: #082332;
+            background: linear-gradient(25deg,#082332,#005272);
+            width:fit-content;
+            height: fit-content;
+            border-radius:5px;
+            padding: 80px;
+            position: relative;
+        }
+        #alert_box .alert_div input,.alert_box .alert_div button{
+            padding:5px;
+            border: none;
+            outline: none;
+        }
+        #alert_box .alert_div #close{
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        #alert_box .alert_div#alert_setting,#alert_box .alert_div#alert_icons{
+            display: none;
+        }
+        #alert_box .alert_div#alert_icons a{
+            display: inline-block;
+            margin:0 5px;
+        }
+        #alert_box .alert_div#alert_icons a .logo{
+            width: 30px;
+            height: 30px;
+            background: red;
+        }
+        #alert_box .alert_div#alert_icons a .logo1{
+            background:url("https://blogger.googleusercontent.com/img/a/AVvXsEiE3chD0E-kHLJAkSi1c4y7MreCMtIbMiaIzaOSH0c0GKvATiWWWKOnbtYhEyU1AFF1TQynY-TwPhIWmZ-UiMFxAMvz3dknnHFHScPvz39jIUxLWIoVRKMBZTmjbkTlfaondHxpTCZxyEwvnepynku_9mH9Z3HsHws55qkFq2_8W3fqByphKmhitJcT=w200-h200");
+            background-position: center;
+            background-size: cover;
+        }
+        #alert_box .alert_div#alert_icons a .logo2{
+            background:url("https://blogger.googleusercontent.com/img/a/AVvXsEhev7Af_TGW8a3UVht5htrirS0-lPzABO317pjiJl9y0ta4xgA60UuXmka0XRSapLD4iuualTToa7AL3sKuK6pfDztuCSr_tR7Nb6K2F2JfBnRgaruwBq2fek5DAn_uyaBmTQaqUaVCOqGcRIMOTv4y0hVfxGS443Dmhv8QzcTG-rJzdfJaxK1PsQ6l=w200-h200");
+            background-position: center;
+            background-size: cover;
+        }
+        #alert_box .alert_div#alert_icons a .logo3{
+            background:url("https://blogger.googleusercontent.com/img/a/AVvXsEifmhERufbdX8KNs13QVBF5me5tJJduU3fkRqn57_G3Xx2DoKkS_-DDW_bAGFwaXLYXzKGAvM474nEADBT9Gp8YgaGczq_BDKfdtRXZ-wLZJQtryrvryDoMy5WJSMB_Gy4PMwv_Nd_6UlC_Xcjzx5-bMcacV-apt54HUchLMzTsxGdBoX0RerPRyN-y=w200-h200");
+            background-position: center;
+            background-size: cover;
+        }
+        #alert_box .alert_div#alert_icons a .logo4{
+            background:url("https://blogger.googleusercontent.com/img/a/AVvXsEiE3chD0E-kHLJAkSi1c4y7MreCMtIbMiaIzaOSH0c0GKvATiWWWKOnbtYhEyU1AFF1TQynY-TwPhIWmZ-UiMFxAMvz3dknnHFHScPvz39jIUxLWIoVRKMBZTmjbkTlfaondHxpTCZxyEwvnepynku_9mH9Z3HsHws55qkFq2_8W3fqByphKmhitJcT=w200-h200");
+            background-position: center;
+            background-size: cover;
+        }
+        ::-webkit-scrollbar{
+            width: 0;
+        }
+        @media screen and (min-width:700px) {
+            .side_bar nav{
+                width:30%;
+            }
+            iframe{
+                height:84vh;
+            }
+            .code_editor{
+                display: grid;
+                grid-template-columns: 1fr 3fr;
+                grid-template-rows: 1fr;
+                grid-column-gap: 0px;
+                grid-row-gap: 0px;
+            }
+            .code_editor #text_view{
+                height:84vh;
+                
+            }
+            .code_editor .text_area{
+                display: flex;
+                flex-direction: column;
+            }
+            .code_editor .text_area textarea{
+                height:28vh;
+            }
+            .code_editor .text_area  #css,.code_editor .text_area #js{
+            display:inline-block;
+            }
+            header #desktop{
+            display: inline-block;
+            }
+            header #mobile{
+            display: none;
+            }
+            textarea{
+                border-bottom:2px solid #000c13;
+            }
+
+        }
+
+        @media screen and (min-width:1000px){
+            .side_bar nav{
+                width:25%;
+            }
+        }
+        @media screen and (min-width:1500px){
+            .side_bar nav{
+                width:20%;
+            }
+        }
+        @media screen and (min-width:2000px){
+            body{
+                font-size: 2rem;
+            }
+            textarea{
+                font-size: 2rem;
+            }
+            li{
+                font-size: 2rem;
+            }
+            button{
+                font-size: 2rem;
+            }
+            .side_bar nav{
+                width:15%;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="side_bar" id="side_bar" >
+        <nav>
+            <div class="close"><i class="fas fa-times" onclick="side_bar()"></i></div>
+            <ul>
+                <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- main -->
+    <div class="main">
+        <header>
+            <div class="left">
+                <!-- <i class="fa fa-arrow-left"></i> -->
+                <div class="logo">Codegram</div>
+            </div>
+            <div class="right" id="mobile">
+                <button id="html_btn" onclick="html_box()">Html</button>
+                <button onclick="css_box()">CSS</button>
+                <button onclick="js_box()">JS</button>
+                <button onclick="result_box()">Result</button>
+                <button class="ham" onclick="side_bar()"><i class="fa fa-bars" ></i></button>
+            </div>
+            <div class="right" id="desktop">
+                <button class="layout_key" onclick="layout()"><i class="fas fa-th-large" ></i>Layout</button>
+                <button class="ham" onclick="side_bar()"><i class="fa fa-bars" ></i></button>
+            </div>
+    
+        </header>
+
+        <div class="code_editor">
+            <div id="text_view">
+                <div class="text_area">
+                    <textarea placeholder="HTML"  id="html"></textarea>
+                    <textarea placeholder="CSS"  id="css"></textarea>
+                    <textarea placeholder="JavaScript" id="js"></textarea>
+                </div>
+            </div>
+            <div class="output_box">
+                <iframe id="code_output"></iframe>
+                <iframe id="viewer" src="D:\about world\codegram\projects\code\layout1.html"></iframe>
+            </div>
+        </div>
+    </div>
+
+     <div id="alert_box">
+           <div id="alert_main">
+            <!-- add link -->
+            <div class="alert_div" id="alert_setting">
+                <button id="close" onclick="close_alert('setting')"><i class="fas fa-times"></i></button><br>
+                <input type="text" id="link_input" placeholder="Add Your link.."><button id="link_adder">Add</button>
+                <br><br><br>
+                <button id="bootstrap_link" onclick="input_link(bootstrap_cdn)">Bootstrap</button>
+                <button id="font_awesome_link" onclick="input_link(font_awesome_cdn)">font-awesome</button>
+                
+    
+    
+            </div>
+            <!-- icons -->
+            <div class="alert_div" id="alert_icons">
+                <button id="close" onclick="close_alert('icons')"><i class="fas fa-times"></i></button><br>
+                <a href="https://fontawesome.com/v5.15/icons?d=gallery&p=2" target="blank"><div class="logo logo1"></div></a>
+                <a href="https://www.flaticon.com/" target="blank"><div class="logo logo2"></div></a>
+                <a href="https://icons8.com/" target="blank"><div class="logo logo3"></div></a>
+                
+    
+            </div>
+           </div>
+        </div>
+
+    <footer>
+        <button class="btn_footer" onclick="viewer_box()">suggestion</button>
+        <button onclick="close_alert('setting')"><i class="fas fa-cog"></i> setting</button>
+        <button onclick="close_alert('icons')"><i class="fas fa-pen-nib"></i>ICONS</button>
+    </footer>
+
+
+    <script>
+  var html = document.getElementById("html");
+  var css = document.getElementById("css");
+  var js = document.getElementById("js");
+  var code = document.getElementById("code_output").contentWindow.document;
+  var iframe=document.getElementById("code_output");
+  var viewer=document.getElementById("viewer");
+  var alert_box=document.getElementById("alert_box");
+  var link_add=document.getElementById("link_adder");
+  var link_input=document.getElementById("link_input");
+  var bootstrap_link=document.getElementById("bootstrap_link");
+  var font_awesome_link=document.getElementById("font_awesome_link");
+  var alert_setting=document.getElementById("alert_setting");
+  var alert_icons=document.getElementById("alert_icons");
+  
+    let textview=document.querySelector("#text_view");
+    let head_link="";
+
+// cdn
+let bootstrap_cdn='<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">'
+                    +'<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js">'+'<'+'/script>';
+let font_awesome_cdn='<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">';
+
+
+ 
+// button on click functions
+    const side_bar=()=>{
+        let side=document.querySelector("#side_bar");
+        if(side.style.display==="none"){
+            side.style.display="block";
+        }
+        else{
+            side.style.display="none";
+        }
+    }
+    const html_box=()=>{
+        if(html.style.display==="none"){
+            html.style.display="block";
+            css.style.display="none";
+            js.style.display="none";
+        }
+        else{
+            html.style.display="none";
+            css.style.display="block";
+            js.style.display="none";
+        }
+    }
+    const css_box=()=>{
+        if(css.style.display==="none"){
+            html.style.display="none";
+            css.style.display="block";
+            js.style.display="none";
+        }
+        else{
+            html.style.display="none";
+            css.style.display="none";
+            js.style.display="block";
+        }
+    }
+    const js_box=()=>{
+        if(js.style.display==="none"){
+            html.style.display="none";
+            css.style.display="none";
+            js.style.display="block";
+        }
+        else{
+            html.style.display="block";
+            css.style.display="none";
+            js.style.display="none";
+        }
+    }
+    const result_box=()=>{
+        if(iframe.style.height==="90vh"){
+            textview.style.display= "block";
+            iframe.style.height="40vh";
+        }
+        else{
+            textview.style.display= "none";
+            iframe.style.height="90vh";
+            viewer.style.display="none";
+        }
+    }
+
+
+// alert box
+    const close_alert=(a)=>{
+        if(alert_box.style.display==="none"){
+            alert_box.style.display="inline-block";
+            if(a==="setting"){
+                alert_setting.style.display="block";
+            }
+            else if(a==="icons"){
+                alert_icons.style.display="block";
+            }
+
+          }
+          else{
+            alert_box.style.display="none";
+            if(a==="setting"){
+                alert_setting.style.display="none";
+            }
+            else if(a==="icons"){
+                alert_icons.style.display="none";
+            }
+
+          }
+
+
+
+          if(a==="setting"){
+              
+          }
+      }
+    const input_link=(a)=>{
+        link_input.value=a;
+    } 
+    link_add.onclick=function(){
+          if(link_input.value===""||link_input.value===" "){
+            alert("Please first enter a link tag");
+          }else{
+          head_link=head_link+link_input.value;
+          alert(head_link+" is added");
+          }
+      }
+
+
+//code output
+function compile() {
+  document.body.onkeyup = function() {
+    // code_runner
+    let jstag="<script>"+js.value+"<"+"/script>";
+
+      code.open();
+      code.writeln(
+        "<html><head><title>Code Editor</title><meta name='viewport' content='width=device-width, initial-scale=1' />"
+              +head_link+"<style>"+css.value+"</style></head><body>"+html.value+ jstag +"</body></html>"
+       
+      );
+      code.close();
+      
+    };
+  }
+  compile();
+
+
+// viewer show/hide onclick suggestion button
+const viewer_box=()=>{
+    if(viewer.style.display==="none"){
+        viewer.style.display="block";
+        iframe.style.display="none";
+    }
+    else{
+        viewer.style.display="none";
+        iframe.style.display="block";
+    }
+}
+
+
+
+// layout key
+let layout_count=0;
+const layout=()=>{
+    let code_editor=document.querySelector(".code_editor");
+    if(layout_count===0){
+        code_editor.style.gridTemplateColumns="1fr 2fr";
+    }
+    else if(layout_count===1){
+        code_editor.style.gridTemplateColumns="1fr 1fr";
+    }
+    else if(layout_count===2){
+        code_editor.style.gridTemplateColumns="2fr 1fr";
+    }
+    else if(layout_count===3){
+        code_editor.style.gridTemplateColumns="1fr 3fr";
+    }
+   
+
+    if(layout_count<3){
+    layout_count +=1;
+    }
+    else{
+        layout_count=0;
+    }
+}
+ 
+
+
+// editor background on keyup
+
+      html.addEventListener("keyup",function(){
+        iframe.style.backgroundColor = "#fff";
+      });
+      
+
+
+
+    </script>
+</body>
+</html>
